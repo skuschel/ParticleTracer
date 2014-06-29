@@ -21,6 +21,11 @@ sol = pt.solve(ode, xinit, times)
 
 #Distmap
 distmap = pt.distmap_plane(sol, [0,0,0], [1,0,0])
+[pts, slope] = pt.crossing_zeros(distmap)
+print 'points: ' + str(pts)
+print 'slopes: ' + str(slope)
+
+
 import matplotlib.pyplot as plt
 
 plt.plot(times, distmap)

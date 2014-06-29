@@ -72,6 +72,21 @@ def distmap_plane(sol, planevec, planenormal):
     ret = np.dot(sol[:,:3], planenormal) - origindist
     return ret
 
+def crossing_zeros(distmap):
+    '''
+    Returns a list of indices and slopes, where the distmap array has crossd 0. These indices are floats because the zero crossing is interpolated.
+    '''
+    index = []
+    slope = []
+    for i in xrange(len(distmap)-1):
+         if distmap[i]*distmap[i+1] < 0:
+            #linear interpolation
+            slope.append(distmap[i+1] - distmap[i])
+            index.append(i + distmap[i] / slope[-1])
+
+    return index, slope
+
+
 
 def plotsol(sol, times):
     import matplotlib.pyplot as plt
