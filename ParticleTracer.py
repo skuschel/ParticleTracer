@@ -58,6 +58,20 @@ def solve(ode, xinit, times, **kwargs):
     import scipy.integrate as si
     return si.odeint(ode, xinit, times, **kwargs)
 
+def distmap_plane(sol, planevec, planenormal):
+    '''
+    converts a list of coorinates into a list of distances to the given plane.
+    sol         trajectory
+    planevec    vector pointing to an aribitrary point inside the plane
+    planenormal normal vector of the plane defined
+    '''
+    planenormal = np.array(planenormal)
+    planevec = np.array(planevec)
+    planenormal = planenormal / np.sqrt((planenormal*2).sum())
+    origindist = np.dot(planevec, planenormal)
+    ret = np.dot(sol[:,:3], planenormal) - origindist
+    return ret
+
 
 def plotsol(sol, times):
     import matplotlib.pyplot as plt
