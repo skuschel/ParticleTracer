@@ -74,7 +74,7 @@ def distmap_plane(sol, planevec, planenormal):
 
 def crossing_zeros(distmap):
     '''
-    Returns a list of indices and slopes, where the distmap array has crossd 0. These indices are floats because the zero crossing is interpolated.
+    Returns a list of indices and slopes, where the distmap array has crossd 0. These indices are floats because the zero crossing is linearly interpolated.
     '''
     index = []
     slope = []
@@ -82,7 +82,7 @@ def crossing_zeros(distmap):
          if distmap[i]*distmap[i+1] < 0:
             #linear interpolation
             slope.append(distmap[i+1] - distmap[i])
-            index.append(i + distmap[i] / slope[-1])
+            index.append(i + np.abs(distmap[i] / slope[-1]))
 
     return index, slope
 
