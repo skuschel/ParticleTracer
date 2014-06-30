@@ -58,6 +58,13 @@ def solve(ode, xinit, times, **kwargs):
     import scipy.integrate as si
     return si.odeint(ode, xinit, times, **kwargs)
 
+def normalize(vec):
+    '''
+    returns the normalized vector.
+    '''
+    vec = np.array(vec)
+    return vec / np.sqrt((vec**2).sum())
+
 def distmap_plane(sol, planevec, planenormal):
     '''
     converts a list of coorinates into a list of distances to the given plane.
@@ -67,7 +74,7 @@ def distmap_plane(sol, planevec, planenormal):
     '''
     planenormal = np.array(planenormal)
     planevec = np.array(planevec)
-    planenormal = planenormal / np.sqrt((planenormal*2).sum())
+    planenormal = planenormal / np.sqrt((planenormal**2).sum())
     origindist = np.dot(planevec, planenormal)
     ret = np.dot(sol[:,:3], planenormal) - origindist
     return ret

@@ -32,3 +32,6 @@ plt.plot(times, distmap)
 plt.xlabel('t')
 plt.ylabel('distance to plane')
 plt.show()
+
+print 'crossings:'
+print pt.crossplane(sol, [0.01,0,0], [1,0,0])
