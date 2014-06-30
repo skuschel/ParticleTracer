@@ -91,8 +91,20 @@ def crossing_zeros(distmap):
             slope.append(distmap[i+1] - distmap[i])
             index.append(i + np.abs(distmap[i] / slope[-1]))
 
-    return index, slope
+    return [index, slope]
 
+def crossplane(sol, planevec, planenormal):
+    '''
+    returns the linearly interpolated positions and angles a given trajectory crosses a plane at.
+    '''
+    distmap = distmap_plane(sol, planevec, planenormal)
+    [index, tmp] = crossing_zeros(distmap)
+    ret = []
+    for i in index:
+        slope = sol[np.floor(i)+1] - sol[np.floor(i)]
+        ret.append(sol[np.floor(i)] + (i - np.floor(i)) * slope)
+    angles = [np.arccos(np.dot(normalize(planenormal), normalize(s[3:6]))) for s in ret]
+    return [ret, angles]
 
 
 def plotsol(sol, times):
