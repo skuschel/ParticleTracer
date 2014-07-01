@@ -106,6 +106,23 @@ def crossplane(sol, planevec, planenormal):
     angles = [np.arccos(np.dot(normalize(planenormal), normalize(s[3:6]))) for s in ret]
     return [ret, angles]
 
+def transform2planecoords(sol, planevec, planenormal, plane_ex):
+    '''
+    Transforms all coorinates into the coordinate system of a plane defined:
+    planevec: points to the new (0,0,0).
+    planenormal: points to the new z direction (will be normalized if not).
+    plane_ex: points to the new x direction (will be normalized if not).
+    the new y direction vector will be calculated to be "planenormal cross plane_ex"
+    '''
+    #Rotation transformation Matrix
+    m = np.array([normalize(plane_ex),normalize(np.cross(planenormal, plane_ex)), normalize(planenormal)] )
+    sol = np.array(sol).copy()
+    for i in xrange(len(sol)):
+        sol[i,:3] = np.dot(m, sol[i,:3] - planevec)
+        sol[i,3:6] = np.dot(m, sol[i,3:6])
+    return sol
+
+
 
 def plotsol(sol, times):
     import matplotlib.pyplot as plt

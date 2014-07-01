@@ -33,5 +33,13 @@ plt.xlabel('t')
 plt.ylabel('distance to plane')
 plt.show()
 
+planevec = [0.01,0,0]
+planenormal = [1,1,0]
+
 print 'crossings:'
-print pt.crossplane(sol, [0.01,0,0], [1,0,0])
+solcross, crossangle = pt.crossplane(sol, planevec, planenormal)
+print solcross, crossangle
+
+print 'transform to plane coordinates'
+crossplane = pt.transform2planecoords(solcross, planevec, planenormal, [0,1,0])
+print crossplane
