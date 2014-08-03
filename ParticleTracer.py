@@ -112,10 +112,16 @@ def transform2planecoords(sol, planevec, planenormal, plane_ex):
     planevec: points to the new (0,0,0).
     planenormal: points to the new z direction (will be normalized if not).
     plane_ex: points to the new x direction (will be normalized if not).
+            Only the component perpendicular to planenormal will be used.
     the new y direction vector will be calculated to be "planenormal cross plane_ex"
     '''
+    plane_ex = np.array(plane_ex)
+    planenormal = np.array(planenormal)
     #Rotation transformation Matrix
-    m = np.array([normalize(plane_ex),normalize(np.cross(planenormal, plane_ex)), normalize(planenormal)] )
+    vec_x = normalize(plane_ex - np.dot(plane_ex, planenormal) * planenormal)
+    vec_y = normalize(np.cross(planenormal, plane_ex))  # ey = ez cross ex
+    vec_z = normalize(planenormal)
+    m = np.array([vec_x, vec_y, vec_z])
     sol = np.array(sol).copy()
     for i in xrange(len(sol)):
         sol[i,:3] = np.dot(m, sol[i,:3] - planevec)

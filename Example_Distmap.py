@@ -41,5 +41,5 @@ solcross, crossangle = pt.crossplane(sol, planevec, planenormal)
 print solcross, crossangle
 
 print 'transform to plane coordinates'
-crossplane = pt.transform2planecoords(solcross, planevec, planenormal, [0,1,0])
+crossplane = pt.transform2planecoords(solcross, planevec, planenormal, [0.9,1,0])
 print crossplane
