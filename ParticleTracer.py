@@ -16,6 +16,7 @@ class const:
     qe = 1.602 * 10**-19
     mp = 1836.2 * me    #proton mass
     keV = 1000 * qe
+    MeV = 1000 * keV
 
 
 def ekin2p(ekin, m=const.me):
@@ -105,6 +106,22 @@ def crossplane(sol, planevec, planenormal):
         ret.append(sol[np.floor(i)] + (i - np.floor(i)) * slope)
     angles = [np.arccos(np.dot(normalize(planenormal), normalize(s[3:6]))) for s in ret]
     return [ret, angles]
+
+
+def crossplane1st(sol, planevec, planenormal):
+    '''
+    returns only the first crossing as corssplane does. If the given trajectory
+    never crosses the plane, the function returns None.
+    '''
+    [crosses, angles] = crossplane(sol, planevec, planenormal)
+    if len(crosses) == 0:
+        cross = np.array([np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan])
+        angle = np.nan
+    else:
+        cross = crosses[0]
+        angle = angles[0]
+    return [cross, angle]
+
 
 def transform2planecoords(sol, planevec, planenormal, plane_ex):
     '''
