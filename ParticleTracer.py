@@ -22,6 +22,9 @@ class const:
 def ekin2p(ekin, m=const.me):
     return np.sqrt((ekin + m * const.c2) ** 2 / const.c2 - m**2 * const.c2)
 
+def p2ekin(p, m=const.me):
+    return np.sqrt(p**2 * const.c2 + m**2 * const.c2**2) - const.me * const.c2
+
 def ekin2gamma(ekin, m=const.me):
     return 1 + ekin / (m * const.c2)
 
